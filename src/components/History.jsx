@@ -3,9 +3,9 @@ import { Box, Button, Typography, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
 
-const History = () => {
+const History = ({ loan_id }) => {
   const BVN = localStorage.getItem("user");
-  const Loan_id = "63a0d998753cc635f9639630";
+  const Loan_id = "63a0ecb4b4cc63e8ec3b126f";
   const [ammount, setAmmount] = useState("");
   const [ammount_No, setAmmount_No] = useState("");
 
@@ -23,6 +23,9 @@ const History = () => {
   }, []);
 
   const RePay = async () => {
+    console.log(
+      `amount: ${ammount} -- account No: ${ammount_No} -- loanId: ${Loan_id} -- BVN: ${BVN}`
+    );
     await axios
       .post("https://superloan.onrender.com/api/loan/payloan", {
         amount: ammount,
@@ -32,7 +35,8 @@ const History = () => {
       })
       .then(function (response) {
         alert(response.data.message);
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -72,9 +76,9 @@ const History = () => {
         />
         <TextField
           id="outlined-basic"
-          label=""
+          label="loan id"
           variant="outlined"
-          defaultValue={Loan_id}
+          //defaultValue={Loan_id}
           style={{ width: "100%", marginTop: "20px" }}
         />
         <TextField

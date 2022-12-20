@@ -61,6 +61,7 @@ export default function AllUsersTable({ users }) {
             <StyledTableCell>Email</StyledTableCell>
             {/* <StyledTableCell>Phone</StyledTableCell> */}
             <StyledTableCell>DOB</StyledTableCell>
+            <StyledTableCell>Action</StyledTableCell>
             {/* <StyledTableCell>Gender</StyledTableCell>
             <StyledTableCell>Ocupation</StyledTableCell> */}
           </TableRow>
@@ -74,6 +75,9 @@ export default function AllUsersTable({ users }) {
               <StyledTableCell>{row.email}</StyledTableCell>
               {/*   <StyledTableCell>{row?.phone}</StyledTableCell> */}
               <StyledTableCell>{row.dob}</StyledTableCell>
+              <StyledTableCell>
+                <button>View Loan History</button>
+              </StyledTableCell>
               {/*   <StyledTableCell>{row.gender}</StyledTableCell>
               <StyledTableCell>{row.occupation}</StyledTableCell> */}
             </StyledTableRow>

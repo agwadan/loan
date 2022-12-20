@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import UserTable from "../components/UserTable";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
 function Loan(props) {
@@ -29,6 +30,22 @@ function Loan(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .post(`https://superloan.onrender.com/api/loan/user/getdata`, {
+        BVN: "20012345678",
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.data.statusCode === "LOAN_NOT_PAID") {
+          navigate("/Loan_Payment");
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const drawer = (
     <div>

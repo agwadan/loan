@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -19,26 +21,33 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import UserTable from "../components/UserTable";
 import Avatar from "@mui/material/Avatar";
-import axios from "axios";
-import AllUsersTable from "../components/AllUsersTable";
+import HistoryofLoan from "../components/HistoryofLoan";
+
 const drawerWidth = 240;
 
-function Admin(props) {
-  const [users, setUsers] = useState([]);
+function UserLoanHistory(user) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const [history, setHistory] = useState([]);
   useEffect(() => {
+    const data = {
+      BVN: user,
+    };
     axios
-      .get("https://superloan.onrender.com/api/auth/admin/getallusers", {})
+      .get("https://superloan.onrender.com/api/loan/record", { params: data })
       .then(function (response) {
         console.log(response.data.data);
-        setUsers(response.data.data);
-      });
-  });
+        setHistory(response.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const drawer = (
     <div>
       <div>
@@ -47,42 +56,34 @@ function Admin(props) {
             variant="h6"
             color="initial"
             style={{ textAlign: "center", padding: "16px" }}>
-            Admin Dashboard
+            User Dashboard
           </Typography>
         </Link>
       </div>
       <Divider />
       <List>
         <ul style={{ listStyle: "none" }}>
+          {/* <Link to='/' style={{ textDecoration: 'none', color: 'black', padding: '10px' }}><li>All Users</li> </Link> */}
           <Link
-            to="/admin"
-            style={{ textDecoration: "none", color: "black", padding: "10px" }}>
-            <li>All Users</li>{" "}
-          </Link>
-          {/*   <Link
             to="/Loan"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
             <li>Loan</li>{" "}
-          </Link> */}
-
-          {/* <Link
+          </Link>
+          <Link
             to="/Loan_Histry"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
             <li>Loan History</li>{" "}
-          </Link> */}
-
-          {/*  <Link
+          </Link>
+          <Link
             to="/Loan_Payment"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
             <li>Loan Payment</li>{" "}
-          </Link> */}
-
-          {/* <Link
+          </Link>
+          {/*   <Link
             to="/Profile"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
             <li>Profile</li>{" "}
           </Link> */}
-
           <Link
             to="/SignOut"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
@@ -174,13 +175,13 @@ function Admin(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}>
         <Toolbar />
-        <AllUsersTable users={users} />
+        <HistoryofLoan history={history} />
       </Box>
     </Box>
   );
 }
-Admin.propTypes = {
+UserLoanHistory.propTypes = {
   window: PropTypes.func,
 };
 
-export default Admin;
+export default UserLoanHistory;
