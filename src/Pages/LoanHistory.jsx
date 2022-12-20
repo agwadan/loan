@@ -37,7 +37,7 @@ function LoanHistory(props) {
   const [history, setHistory] = useState([]);
   useEffect(() => {
     const data = {
-      BVN: "20012345678",
+      BVN: user,
     };
     axios
       .get("https://superloan.onrender.com/api/loan/record", { params: data })
@@ -56,7 +56,7 @@ function LoanHistory(props) {
             variant="h6"
             color="initial"
             style={{ textAlign: "center", padding: "16px" }}>
-            Admin Dashboard
+            User Dashboard
           </Typography>
         </Link>
       </div>

@@ -38,7 +38,7 @@ function Loan(props) {
             variant="h6"
             color="initial"
             style={{ textAlign: "center", padding: "16px" }}>
-            Admin Dashboard
+            User Dashboard
           </Typography>
         </Link>
       </div>
