@@ -61,11 +61,11 @@ function Loan(props) {
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
             <li>Loan Payment</li>{" "}
           </Link>
-          <Link
+          {/* <Link
             to="/Profile"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
             <li>Profile</li>{" "}
-          </Link>
+          </Link> */}
           <Link
             to="/SignOut"
             style={{ textDecoration: "none", color: "black", padding: "10px" }}>
