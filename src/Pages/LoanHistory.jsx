@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -27,9 +29,24 @@ function LoanHistory(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const [history, setHistory] = useState([]);
+  useEffect(() => {
+    const data = {
+      BVN: "20012345678",
+    };
+    axios
+      .get("https://superloan.onrender.com/api/loan/record", { params: data })
+      .then(function (response) {
+        console.log(response.data.data);
+        setHistory(response.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const drawer = (
     <div>
@@ -158,7 +175,7 @@ function LoanHistory(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}>
         <Toolbar />
-        <HistoryofLoan />
+        <HistoryofLoan history={history} />
       </Box>
     </Box>
   );
